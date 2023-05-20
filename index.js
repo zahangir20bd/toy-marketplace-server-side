@@ -41,7 +41,9 @@ async function run() {
     // Insert a document
     app.post("/alltoys", async (req, res) => {
       const toyData = req.body;
-      console.log(toyData);
+      console.log("ToyData", toyData);
+      const result = await toysCollection.insertOne(toyData);
+      res.send(result);
     });
 
     // Load Specific Toys data
