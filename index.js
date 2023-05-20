@@ -38,6 +38,12 @@ async function run() {
       res.send(result);
     });
 
+    // Insert a document
+    app.post("/alltoys", async (req, res) => {
+      const toyData = req.body;
+      console.log(toyData);
+    });
+
     // Load Specific Toys data
     app.get("/alltoys/:id", async (req, res) => {
       const id = req.params.id;
