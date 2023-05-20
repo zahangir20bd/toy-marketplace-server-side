@@ -34,7 +34,12 @@ async function run() {
     const toysCollection = client.db("toyGalaxyDB").collection("alltoys");
     // Load All Toys Data
     app.get("/alltoys", async (req, res) => {
-      const result = await toysCollection.find().toArray();
+      console.log(req.query.email);
+      let query = {};
+      if (req.query?.email) {
+        query = { seller_email: req.query.email };
+      }
+      const result = await toysCollection.find(query).toArray();
       res.send(result);
     });
 
