@@ -1,7 +1,7 @@
 // export or require
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 
 // create app
@@ -32,9 +32,17 @@ async function run() {
     await client.connect();
 
     const toysCollection = client.db("toyGalaxyDB").collection("alltoys");
-
+    // Load All Toys Data
     app.get("/alltoys", async (req, res) => {
       const result = await toysCollection.find().toArray();
+      res.send(result);
+    });
+
+    // Load Specific Toys data
+    app.get("/alltoys/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await toysCollection.findOne(query);
       res.send(result);
     });
 
