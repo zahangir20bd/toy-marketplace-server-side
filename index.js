@@ -60,7 +60,7 @@ async function run() {
     });
 
     // Load Data from Gallery collection
-    app.get("gallery", async (req, res) => {
+    app.get("/gallery", async (req, res) => {
       const result = await galleryDataCollection.find().toArray();
       res.send(result);
     });
@@ -79,6 +79,13 @@ async function run() {
       const query = { _id: new ObjectId(id) };
       const result = await toysCollection.findOne(query);
       res.send(result);
+    });
+
+    // Update Data
+
+    app.patch("/alltoys/:id", async (req, res) => {
+      const updatedData = req.body;
+      console.log(updatedData);
     });
 
     // Delete Data from DB Through Server
