@@ -31,7 +31,12 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    // All Toys Collection
     const toysCollection = client.db("toyGalaxyDB").collection("alltoys");
+
+    // All Review Collection
+    const reviewCollection = client.db("toyGalaxyDB").collection("reviews");
+
     // Load All Toys Data
     app.get("/alltoys", async (req, res) => {
       console.log(req.query.email);
