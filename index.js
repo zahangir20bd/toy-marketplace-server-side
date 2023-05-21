@@ -44,12 +44,24 @@ async function run() {
 
     // Load All Toys Data
     app.get("/alltoys", async (req, res) => {
-      console.log(req.query.email);
+      console.log(req.query);
+
       let query = {};
       if (req.query?.email) {
         query = { seller_email: req.query.email };
+        const result = await toysCollection.find(query).toArray();
+        res.send(result);
       }
-      const result = await toysCollection.find(query).toArray();
+
+      const page = parseInt(req.query.page) || 0;
+      const limit = parseInt(req.query.limit) || 20;
+      const skip = page * limit;
+      const result = await toysCollection
+        .find()
+        .skip(skip)
+        .limit(limit)
+        .toArray();
+
       res.send(result);
     });
 
@@ -81,8 +93,12 @@ async function run() {
       res.send(result);
     });
 
-    // Update Data
+    app.get("/totalToys", async (req, res) => {
+      const result = await toysCollection.estimatedDocumentCount();
+      res.send({ totalToys: result });
+    });
 
+    // Update Data
     app.patch("/alltoys/:id", async (req, res) => {
       const updatedData = req.body;
       console.log(updatedData);
