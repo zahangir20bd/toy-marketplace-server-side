@@ -49,20 +49,20 @@ async function run() {
       let query = {};
       if (req.query?.email) {
         query = { seller_email: req.query.email };
-        const result = await toysCollection.find(query).toArray();
-        res.send(result);
       }
-
-      const page = parseInt(req.query.page) || 0;
-      const limit = parseInt(req.query.limit) || 20;
-      const skip = page * limit;
-      const result = await toysCollection
-        .find()
-        .skip(skip)
-        .limit(limit)
-        .toArray();
-
+      const result = await toysCollection.find(query).toArray();
       res.send(result);
+
+      //   const page = parseInt(req.query.page) || 0;
+      //   const limit = parseInt(req.query.limit) || 20;
+      //   const skip = page * limit;
+      //   const result = await toysCollection
+      //     .find()
+      //     .skip(skip)
+      //     .limit(limit)
+      //     .toArray();
+
+      //   res.send(result);
     });
 
     // Load All Reviews from Review Collection
