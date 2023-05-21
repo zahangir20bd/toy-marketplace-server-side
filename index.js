@@ -37,6 +37,11 @@ async function run() {
     // All Review Collection
     const reviewCollection = client.db("toyGalaxyDB").collection("reviews");
 
+    // Gallery Data Collection
+    const galleryDataCollection = client
+      .db("toyGalaxyDB")
+      .collection("galleryData");
+
     // Load All Toys Data
     app.get("/alltoys", async (req, res) => {
       console.log(req.query.email);
@@ -45,6 +50,12 @@ async function run() {
         query = { seller_email: req.query.email };
       }
       const result = await toysCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    // Load All Reviews from Review Collection
+    app.get("/reviews", async (req, res) => {
+      const result = await reviewCollection.find().toArray();
       res.send(result);
     });
 
