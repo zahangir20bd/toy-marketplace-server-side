@@ -59,6 +59,12 @@ async function run() {
       res.send(result);
     });
 
+    // Load Data from Gallery collection
+    app.get("gallery", async (req, res) => {
+      const result = await galleryDataCollection.find().toArray();
+      res.send(result);
+    });
+
     // Insert a document
     app.post("/alltoys", async (req, res) => {
       const toyData = req.body;
